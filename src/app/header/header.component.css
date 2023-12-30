@@ -1,0 +1,77 @@
+/* styles.css */
+
+nz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.1); */
+}
+
+.logo {
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.menu {
+  display: flex;
+  margin-right: 25px;
+  align-items: center;
+}
+
+.menu a {
+  color: #fff;
+}
+
+[nz-button] {
+  margin-right: 8px;
+  margin-bottom: 12px;
+}
+
+nz-button-group [nz-button] {
+  margin-right: 0;
+}
+
+nz-select {
+  width: 200px;
+}
+
+.nzSelect {
+  border-radius: 15px;
+}
+
+.datePicker {
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.search-button {
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  margin-top: 12px;
+}
+
+.search-group {
+  display: flex;
+  align-items: center;
+}
+
+.drop-down {
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.1);
+}
+
+.user-name {
+  padding: 10px;
+}
+
+.name {
+  padding: 5px;
+}
+
+.avatar {
+  cursor: pointer;
+}

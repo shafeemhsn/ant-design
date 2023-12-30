@@ -1,0 +1,84 @@
+<div style="padding: 20px; max-width: 1290px; margin: 0 auto">
+  <div>
+    <p class="price-text">Price /hr.: 4,500/-</p>
+    <h2 nz-typography>CR7 Futsal & Indoor Cricket Court</h2>
+    <p class="court-text">Activities: Futsal Court, Cricket</p>
+    <div style="display: inline-block; vertical-align: middle">
+      <i nz-icon>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          fill="#000000"
+        >
+          <path d="M0 0h24v24H0z" fill="none" />
+          <path
+            d="M12 2C8.13 2 5 5.13 5 9c0 6.75 7 13 7 13s7-6.25 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+          />
+        </svg>
+      </i>
+      <p
+        style="
+          display: inline-block;
+          vertical-align: middle;
+          margin-left: 5px;
+          font-weight: bold;
+        "
+      >
+        Colombo 5
+      </p>
+    </div>
+  </div>
+
+  <div>
+    <img
+      class="main-img"
+      nz-image
+      width="560px"
+      height="362px"
+      nzSrc="/assets/court/set2-17.jpg"
+      alt=""
+    />
+  </div>
+
+  <nz-divider></nz-divider>
+  <div style="display: flex">
+    <div
+      class="slots"
+      style="display: flex; flex-wrap: wrap; justify-content: center"
+    >
+      <div *ngFor="let slot of slots">
+        <button
+          [ngClass]="{
+            'selected-btn': slot.status === 'selected',
+            'available-btn': slot.status === 'available',
+            'unavailable-btn': slot.status === 'unavailable',
+            'reserved-btn': slot.status === 'reserved'
+          }"
+          (click)="toggleSeat(slot)"
+        >
+          <a>{{ slot.name | date : "hh:mm a" }} </a>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <ul class="legends">
+      <li class="selected"><span class="text">Selected</span></li>
+      <li class="available"><span class="text">Available</span></li>
+      <li class="reserved"><span class="text">Reserved</span></li>
+      <li class="unavailable"><span class="text">Unavailable</span></li>
+    </ul>
+  </div>
+
+  <nz-divider></nz-divider>
+  <div style="text-align: center">
+    <p class="time-select-text">2 hour(s) selected</p>
+    <h1>LKR 9,000.00</h1>
+    <button nz-button nzType="primary" [nzSize]="size">Reserve</button>
+  </div>
+
+  <nz-divider></nz-divider>
+</div>

@@ -1,0 +1,148 @@
+.court-text {
+  margin-top: -10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.price-text {
+  text-align: right;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: -25px;
+}
+
+/* -------------slots----------------------  */
+
+@mixin slot-btn-common {
+  width: 90px;
+  height: 60px;
+  margin-right: 8px;
+  margin-bottom: 12px;
+  border-radius: 3px;
+  font-size: large;
+}
+
+.selected-btn {
+  @include slot-btn-common;
+  border: 1px solid #838383;
+  background-color: #3939b8;
+  a {
+    color: #fff;
+  }
+  &:hover {
+    a {
+      color: #fff;
+    }
+  }
+}
+
+.available-btn {
+  @include slot-btn-common;
+  border: 1px solid #838383;
+  background-color: transparent;
+  transition: all 0.3s;
+  a {
+    color: #838383;
+  }
+
+  &:hover {
+    background-color: #3939b8;
+    a {
+      color: #fff;
+    }
+  }
+}
+
+.reserved-btn {
+  @include slot-btn-common;
+  background-color: #fa0000;
+  border: 1px solid #838383;
+  a {
+    color: #fff;
+    cursor: default;
+  }
+  &:hover {
+    a {
+      color: #fff;
+    }
+  }
+}
+
+.unavailable-btn {
+  @include slot-btn-common;
+  background-color: #f894bf;
+  border: 1px solid #838383;
+  a {
+    color: #fff;
+    cursor: default;
+  }
+  &:hover {
+    a {
+      color: #fff;
+      cursor: not-allowed;
+    }
+  }
+}
+
+/*  --------slots ends--------- */
+
+.legends {
+  padding-left: 0;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 30px;
+}
+
+.legends li {
+  margin-right: 25px;
+  padding-left: 25px;
+  position: relative;
+}
+
+li.selected:before {
+  background-color: #3939b8;
+  content: "";
+  width: 15px;
+  height: 15px;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 4px;
+}
+
+li.available:before {
+  border: 1px solid #838383;
+  background-color: #fff;
+  content: "";
+  width: 15px;
+  height: 15px;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 4px;
+}
+
+li.reserved:before {
+  background-color: #fa0000;
+  content: "";
+  width: 15px;
+  height: 15px;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 4px;
+}
+
+li.unavailable:before {
+  background-color: #f894bf;
+  content: "";
+  width: 15px;
+  height: 15px;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 4px;
+}

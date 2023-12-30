@@ -1,0 +1,94 @@
+<nz-header>
+  <div class="logo">
+    <span style="color: #fff; font-size: 1.5rem; font-weight: bold"
+      >SF Booking</span
+    >
+  </div>
+
+  <div class="search-group">
+    <nz-date-picker
+      class="datePicker"
+      nzFormat="yyyy-MM-dd"
+      ngModel
+      (ngModelChange)="onChange($event)"
+      (nzOnOk)="onOk($event)"
+    ></nz-date-picker>
+
+    <nz-time-picker [(ngModel)]="time" nzFormat="HH:mm"></nz-time-picker>
+    <nz-select
+      class="nzSelect"
+      nzShowSearch
+      nzAllowClear
+      nzPlaceHolder="Activity"
+      [(ngModel)]="selectedValue"
+    >
+      <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+      <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+      <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+    </nz-select>
+
+    <nz-select
+      class="nzSelect"
+      nzShowSearch
+      nzAllowClear
+      nzPlaceHolder="Location"
+      [(ngModel)]="selectedValue"
+    >
+      <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+      <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+      <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+    </nz-select>
+    <button nz-button nzType="primary" class="search-button">
+      <i nz-icon nzType="search"></i>
+    </button>
+  </div>
+
+  <ul nz-menu nzTheme="dark" nzMode="horizontal" class="menu">
+    <li>
+      <button
+        nz-button
+        nzType="primary"
+        [nzSize]="size"
+        nzShape="round"
+        routerLink="/nav"
+      >
+        <i nz-icon nzType="user" nzTheme="outline"></i>
+        Log in
+      </button>
+    </li>
+    <li>
+      <button nz-button nzType="primary" [nzSize]="size" nzShape="round">
+        Sign in
+      </button>
+    </li>
+    <li>
+      <nz-avatar
+        class="avatar"
+        nzSize="large"
+        nzText="SM"
+        style="color: #f56a00; background-color: #fde3cf"
+        nz-dropdown
+        [nzDropdownMenu]="menu2"
+        nzTrigger="click"
+        nzPlacement="bottomRight"
+      ></nz-avatar>
+      <nz-dropdown-menu #menu2="nzDropdownMenu">
+        <ul nz-menu class="drop-down">
+          <li class="user-name">
+            <nz-avatar
+              nzIcon="user"
+              style="background-color: #87d068"
+            ></nz-avatar>
+            <b class="name"> Shafee Muhsin</b>
+          </li>
+          <li nz-menu-divider></li>
+          <li nz-menu-item>menu2 1st menu item</li>
+          <li nz-menu-item>menu2 2nd menu item</li>
+          <li nz-menu-item>menu2 3rd menu item</li>
+          <li nz-menu-divider></li>
+          <li nz-menu-item nzDanger>Log Out</li>
+        </ul>
+      </nz-dropdown-menu>
+    </li>
+  </ul>
+</nz-header>

@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+nz-card {
+  border-radius: 15px;
+}
+
+img {
+  border-radius: 15px;
+}
+
+.cat-font {
+  font-size: 12px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.fac-img {
+  /* width: 260px; */
+  height: 210px;
+  object-fit: cover;
+}
+
+.court-card {
+  width: 288px;
+  height: 280px;
+  background-color: transparent;
+}
+
+.court-text {
+  margin-top: -18px;
+  margin-left: -22px;
+  text-align: start;
+}
+
+.court-title {
+  font-weight: bold;
+}
+
+.court-desc {
+  margin-top: -10px;
+}
+.main-img {
+  border-radius: 15px;
+}

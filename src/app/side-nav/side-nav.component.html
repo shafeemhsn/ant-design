@@ -1,0 +1,54 @@
+<nz-layout>
+  <nz-sider nzCollapsible nzWidth="200px">
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+      <li nz-menu-item>
+        <i nz-icon nzType="file"></i>
+        <span>Configure time-slot</span>
+      </li>
+      <li nz-submenu nzTitle="User" nzIcon="user">
+        <ul>
+          <li nz-menu-item>Tom</li>
+          <li nz-menu-item>Bill</li>
+          <li nz-menu-item>Alex</li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-content>
+      <nz-table
+        #rowSelectionTable
+        nzShowSizeChanger
+        [nzData]="listOfData"
+        (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+      >
+        <thead>
+          <tr>
+            <th
+              [nzSelections]="listOfSelection"
+              [(nzChecked)]="checked"
+              [nzIndeterminate]="indeterminate"
+              (nzCheckedChange)="onAllChecked($event)"
+            >
+              Name
+            </th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of rowSelectionTable.data">
+            <td
+              [nzChecked]="setOfCheckedId.has(data.id)"
+              (nzCheckedChange)="onItemChecked(data.id, $event)"
+            ></td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.age }}</td>
+            <td>{{ data.address }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
