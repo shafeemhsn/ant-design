@@ -1,0 +1,57 @@
+.logo {
+  height: 32px;
+  margin: 16px;
+}
+
+nz-header {
+  background: #fff;
+  padding: 0;
+}
+
+nz-tabset {
+  margin-top: 10px;
+}
+
+.tab-content {
+  margin: 0 16px;
+}
+
+.inner-content {
+  padding: 24px;
+  background: #fff;
+  min-height: 360px;
+}
+
+.layout {
+  height: 110vh;
+}
+
+.main-text {
+  text-align: center;
+  margin-top: 15px;
+}
+
+/* ------------ */
+
+.card-container
+  ::ng-deep
+  > .ant-tabs-card
+  .ant-tabs-content
+  > .ant-tabs-tabpane {
+  background: #fff;
+  padding: 16px;
+}
+.card-container ::ng-deep > .ant-tabs-card > .ant-tabs-nav::before {
+  display: none;
+}
+.card-container ::ng-deep > .ant-tabs-card .ant-tabs-tab {
+  border-color: #fff;
+}
+.card-container ::ng-deep > .ant-tabs-card .ant-tabs-tab-active {
+  border-color: #fff;
+  background: #fff;
+}
+
+.card-container ::ng-deep > .ant-tabs-card .ant-tabs-content {
+  margin-top: -16px;
+}

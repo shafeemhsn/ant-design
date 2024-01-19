@@ -6,7 +6,7 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { en_US } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +31,13 @@ import { CoutPageComponent } from './cout-page/cout-page.component';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { StoreModule } from '@ngrx/store';
+import { courtReducer } from './cout-page/state/court.reducer';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 registerLocaleData(en);
 
@@ -41,6 +48,8 @@ registerLocaleData(en);
     SportFilterComponent,
     SideNavComponent,
     CoutPageComponent,
+    SignUpComponent,
+    AdminDashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +73,11 @@ registerLocaleData(en);
     NzTypographyModule,
     NzImageModule,
     NzTableModule,
+    NzInputModule,
+    NzFormModule,
+    ReactiveFormsModule,
+    NzTabsModule,
+    StoreModule.forRoot({ court: courtReducer }),
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent],

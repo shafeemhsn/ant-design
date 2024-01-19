@@ -56,7 +56,7 @@
             'unavailable-btn': slot.status === 'unavailable',
             'reserved-btn': slot.status === 'reserved'
           }"
-          (click)="toggleSeat(slot)"
+          (click)="toggleSlots(slot)"
         >
           <a>{{ slot.name | date : "hh:mm a" }} </a>
         </button>

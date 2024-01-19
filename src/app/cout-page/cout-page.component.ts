@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NzButtonSize } from 'ng-zorro-antd/button';
 import { CourtSchedule, Slot } from './slot-info';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { CourtState } from './state/court-state';
+import { toggleSlot } from './state/court.actions';
 
 @Component({
   selector: 'app-cout-page',
@@ -9,6 +13,7 @@ import { CourtSchedule, Slot } from './slot-info';
 })
 export class CoutPageComponent implements OnInit {
   slots: any = [];
+
   size: NzButtonSize = 'large';
   inputObject = [
     {
@@ -67,7 +72,7 @@ export class CoutPageComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor(private store: Store<{ court: CourtState }>) {}
 
   ngOnInit(): void {
     this.slots = this.convertToSlots(this.inputObject);
@@ -86,8 +91,6 @@ export class CoutPageComponent implements OnInit {
       updatedDateValue.setMinutes(dateValue.getMinutes() + slotIndex * 30);
 
       const time = updatedDateValue;
-
-      console.log(time);
 
       const status = input[0].slots[key];
 
@@ -113,29 +116,102 @@ export class CoutPageComponent implements OnInit {
     return output;
   };
 
-  toggleSeat(slot: any) {
+  // toggleSlots(slot: any) {
+  //   console.log(slot);
+  //   this.store.dispatch(toggleSlot({ slot }));
+  // }
+
+  toggleSlots(slot: any) {
+    console.log('click: ' + JSON.stringify(slot));
+
     const selectedIndex = this.slots.findIndex((s: any) => s === slot);
 
-    // Deselect the clicked slot
-    if (slot.status === 'selected') {
-      slot.status = 'available';
-
-      // Re-enable all previous slots, including reserved ones
-      this.slots.slice(0, selectedIndex).forEach((s: any) => {
-        if (s.status !== 'selected') {
-          s.status = 'available';
-        }
-      });
-    } else if (slot.status === 'available') {
+    if (slot.status === 'available') {
       // Mark the clicked slot as 'selected'
       slot.status = 'selected';
 
-      // Disable all previous slots
-      this.slots.slice(0, selectedIndex).forEach((s: any) => {
-        if (s.status !== 'selected') {
-          s.status = 'unavailable';
-        }
-      });
+      // Find the last selected slot
+      const lastSelectedIndex = this.slots
+        .slice(0, selectedIndex)
+        .reverse()
+        .findIndex((s: any) => s.status === 'selected');
+      console.log('lastSelectedIndex: ' + lastSelectedIndex);
+
+      // Enable all slots between the last selected and the current selected
+      if (lastSelectedIndex !== -1) {
+        const start = selectedIndex - lastSelectedIndex;
+
+        this.slots.slice(start, selectedIndex).forEach((s: any) => {
+          if (s.status !== 'selected') {
+            s.status = 'selected';
+          }
+        });
+      }
+    } else if (slot.status === 'selected') {
+      // Deselect the clicked slot
+
+      slot.status = 'available';
+
+      // Re-enable all previous slots
+
+      // this.slots.slice(0, selectedIndex).forEach((s: any) => {
+      //   if (s.status !== 'selected') {
+      //     s.status = 'available';
+      //   }
+      // });
     }
   }
 }
+
+// toggleSlots(slot: any) {
+//   if (slot.status === 'available') {
+//     // Mark the clicked slot as 'selected'
+//     slot.status = 'selected';
+
+//     // Disable all previous slots
+//     const selectedIndex = this.slots.findIndex((s: any) => s === slot);
+//     this.slots.slice(0, selectedIndex).forEach((s: any) => {
+//       if (s.status !== 'selected') {
+//         s.status = 'unavailable';
+//       }
+//       console.log(selectedIndex);
+//     });
+//   } else if (slot.status === 'selected') {
+//     // Deselect the clicked slot
+//     slot.status = 'available';
+
+//     // Re-enable all previous slots
+//     const selectedIndex = this.slots.findIndex((s: any) => s === slot);
+//     this.slots.slice(0, selectedIndex).forEach((s: any) => {
+//       if (s.status === 'unavailable') {
+//         s.status = 'available';
+//       }
+//     });
+//   }
+// }
+
+// toggleSlots(slot: any) {
+//   const selectedIndex = this.slots.findIndex((s: any) => s === slot);
+
+//   // Deselect the clicked slot
+//   if (slot.status === 'selected') {
+//     slot.status = 'available';
+
+//     // Re-enable all previous slots, including reserved ones
+//     this.slots.slice(0, selectedIndex).forEach((s: any) => {
+//       if (s.status !== 'selected') {
+//         s.status = 'available';
+//       }
+//     });
+//   } else if (slot.status === 'available') {
+//     // Mark the clicked slot as 'selected'
+//     slot.status = 'selected';
+
+//     // Disable all previous slots
+//     this.slots.slice(0, selectedIndex).forEach((s: any) => {
+//       if (s.status !== 'selected') {
+//         s.status = 'unavailable';
+//       }
+//     });
+//   }
+// }
