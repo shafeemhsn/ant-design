@@ -20,6 +20,18 @@ export class SignUpComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private signUpService: SignUpService) {}
 
+  ngOnInit(): void {
+    this.validateForm = this.fb.group({
+      firstName: [null, [Validators.required]],
+      lastName: [null],
+      email: [null, [Validators.email, Validators.required]],
+      phoneNumber: [null, [Validators.required]],
+      phoneNumberPrefix: ['+94'],
+      password: [null, [Validators.required]],
+      checkPassword: [null, [Validators.required, this.confirmationValidator]],
+    });
+  }
+
   submitForm(): void {
     if (this.validateForm.valid) {
       const userDetails: User = {
@@ -60,18 +72,6 @@ export class SignUpComponent implements OnInit {
     }
     return {};
   };
-
-  ngOnInit(): void {
-    this.validateForm = this.fb.group({
-      firstName: [null, [Validators.required]],
-      lastName: [null],
-      email: [null, [Validators.email, Validators.required]],
-      phoneNumber: [null, [Validators.required]],
-      phoneNumberPrefix: ['+94'],
-      password: [null, [Validators.required]],
-      checkPassword: [null, [Validators.required, this.confirmationValidator]],
-    });
-  }
 
   onSaveComplete(): void {
     // Reset the form to clear the flags

@@ -32,7 +32,7 @@
   <nz-layout class="layout">
     <nz-header
       ><div class="main-text">
-        <h3 nz-typography>Admin Dashboard</h3>
+        <h4 nz-typography>Admin Dashboard</h4>
       </div></nz-header
     >
     <nz-content class="tab-content">
@@ -48,12 +48,13 @@
                 <tr>
                   <th></th>
                   <th>Name</th>
-                  <th>Platform</th>
-                  <th>Version</th>
-                  <th>Upgraded</th>
-                  <th>Creator</th>
-                  <th>Date</th>
-                  <th>Action</th>
+                  <th>Address</th>
+                  <th>City</th>
+                  <th>Contact No.</th>
+                  <th>Facility Email</th>
+                  <th>Profile Url</th>
+                  <th>Status</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -61,16 +62,29 @@
                   <tr>
                     <td [(nzExpand)]="data.expand"></td>
                     <td>{{ data.name }}</td>
-                    <td>{{ data.platform }}</td>
-                    <td>{{ data.version }}</td>
-                    <td>{{ data.upgradeNum }}</td>
-                    <td>{{ data.creator }}</td>
-                    <td>{{ data.createdAt }}</td>
+                    <td>{{ data.address }}</td>
+                    <td>{{ data.city }}</td>
+                    <td>{{ data.contactNo }}</td>
+                    <td>{{ data.facilityEmail }}</td>
+                    <td>{{ data.profileUrl }}</td>
                     <td>
-                      <a>Publish</a>
+                      <ng-container
+                        *ngIf="data.status == 'active'; else inactiveStatus"
+                      >
+                        <nz-badge
+                          [nzStatus]="'success'"
+                          [nzText]="'Active'"
+                        ></nz-badge>
+                      </ng-container>
+                      <ng-template #inactiveStatus>
+                        {{ data.status }}
+                      </ng-template>
+                    </td>
+                    <td>
+                      <a>Edit</a>
                     </td>
                   </tr>
-                  <tr [nzExpand]="data.expand">
+                  <tr [nzExpand]="!!data?.expand">
                     <nz-table
                       #innerTable
                       [nzData]="listOfChildrenData"
@@ -79,44 +93,34 @@
                     >
                       <thead>
                         <tr>
-                          <th>Date</th>
-                          <th>Name</th>
+                          <th>Type</th>
+                          <th>Activities</th>
+                          <th>Price/Hour</th>
+                          <th>Commission %</th>
                           <th>Status</th>
-                          <th>Upgrade Status</th>
-                          <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr *ngFor="let data of innerTable.data">
-                          <td>{{ data.date }}</td>
-                          <td>{{ data.name }}</td>
-                          <td></td>
-                          <td>{{ data.upgradeNum }}</td>
+                          <td>{{ data.courtType }}</td>
+                          <td>{{ data.activities }}</td>
+                          <td>{{ data.pricePerHour }}</td>
+                          <td>{{ data.commissionPercentage }}</td>
                           <td>
-                            <span class="table-operation">
-                              <a
-                                nz-dropdown
-                                class="operation"
-                                [nzDropdownMenu]="menu"
-                              >
-                                Pause
-                                <i nz-icon nzType="down"></i>
-                              </a>
-                              <nz-dropdown-menu #menu="nzDropdownMenu">
-                                <ul nz-menu>
-                                  <li nz-menu-item>
-                                    <a>Action 1</a>
-                                  </li>
-                                  <li nz-menu-item>
-                                    <a>Action 2</a>
-                                  </li>
-                                </ul>
-                              </nz-dropdown-menu>
-                              <nz-divider nzType="vertical"></nz-divider>
-                              <a class="operation">Stop</a>
-                              <nz-divider nzType="vertical"></nz-divider>
-                              <a>More</a>
-                            </span>
+                            <ng-container
+                              *ngIf="
+                                data.status == 'active';
+                                else inactiveStatus
+                              "
+                            >
+                              <nz-badge
+                                [nzStatus]="'success'"
+                                [nzText]="'Active'"
+                              ></nz-badge>
+                            </ng-container>
+                            <ng-template #inactiveStatus>
+                              {{ data.status }}
+                            </ng-template>
                           </td>
                         </tr>
                       </tbody>
@@ -126,10 +130,158 @@
               </tbody>
             </nz-table>
           </nz-tab>
-          <nz-tab *ngFor="let tab of tabs" [nzTitle]="'Tab Title ' + tab">
-            <p>Content of Tab Pane {{ tab }}</p>
-            <p>Content of Tab Pane {{ tab }}</p>
-            <p>Content of Tab Pane {{ tab }}</p>
+          <!-- ***************Create Facility*************************** -->
+          <nz-tab [nzTitle]="'Create Facility'">
+            <div class="container">
+              <form
+                nz-form
+                [formGroup]="facilityForm"
+                (ngSubmit)="submitForm()"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    [nzSm]="6"
+                    [nzXs]="24"
+                    nzRequired
+                    nzFor="userEmail"
+                    >User Email
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzSm]="14"
+                    [nzXs]="24"
+                    nzErrorTip="Please input user email!"
+                  >
+                    <input
+                      nz-input
+                      formControlName="userEmail"
+                      id="userEmail"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                  <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name"
+                    >Facility Name</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzSm]="14"
+                    [nzXs]="24"
+                    nzErrorTip="Please input facility name!"
+                  >
+                    <input nz-input formControlName="name" id="name" />
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label
+                    [nzSm]="6"
+                    [nzXs]="24"
+                    nzRequired
+                    nzFor="address"
+                    >Address</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzSm]="14"
+                    [nzXs]="24"
+                    nzErrorTip="Please input facility address!"
+                  >
+                    <input nz-input formControlName="address" id="address" />
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="city"
+                    >City</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzSm]="14"
+                    [nzXs]="24"
+                    nzErrorTip="Please input facility's city!"
+                  >
+                    <input nz-input formControlName="city" id="city" />
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label
+                    [nzSm]="6"
+                    [nzXs]="24"
+                    nzRequired
+                    nzFor="facilityEmail"
+                    >Facility Email</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzSm]="14"
+                    [nzXs]="24"
+                    nzErrorTip="The input is not valid E-mail!"
+                  >
+                    <input
+                      nz-input
+                      formControlName="facilityEmail"
+                      id="facilityEmail"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label
+                    [nzSm]="6"
+                    [nzXs]="24"
+                    nzFor="contactNumber"
+                    nzRequired
+                    >Facility Contact No.</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzSm]="14"
+                    [nzXs]="24"
+                    [nzValidateStatus]="facilityForm.controls['contactNumber']"
+                    nzErrorTip="Please input the contact number!"
+                  >
+                    <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+                      <ng-template #addOnBeforeTemplate>
+                        <nz-select
+                          formControlName="phoneNumberPrefix"
+                          class="phone-select"
+                        >
+                          <nz-option nzLabel="+94" nzValue="+94"></nz-option>
+                        </nz-select>
+                      </ng-template>
+                      <input
+                        formControlName="contactNumber"
+                        id="'contactNumber'"
+                        nz-input
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label
+                    [nzSm]="6"
+                    [nzXs]="24"
+                    nzRequired
+                    nzFor="profileUrl"
+                    >Profile Url</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzSm]="14"
+                    [nzXs]="24"
+                    nzErrorTip="Please enter the Profile Url!"
+                  >
+                    <input
+                      nz-input
+                      formControlName="profileUrl"
+                      id="profileUrl"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item nz-row class="register-area">
+                  <nz-form-control [nzSpan]="14" [nzOffset]="6">
+                    <button nz-button nzType="primary">Create facility</button>
+                  </nz-form-control>
+                </nz-form-item>
+              </form>
+            </div>
           </nz-tab>
         </nz-tabset>
       </div>

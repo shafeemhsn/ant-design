@@ -1,0 +1,26 @@
+.login-form {
+  width: 300px; /* Adjust the width as needed */
+  margin-top: 20px; /* Add space between the "Sign In" text and the form */
+}
+.login-form-margin {
+  margin-bottom: 16px;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
+}
+
+.center-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+
+.login-container {
+  text-align: center; /* Align content in the center horizontally */
+}

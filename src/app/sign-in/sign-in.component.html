@@ -1,0 +1,46 @@
+<div class="center-container">
+  <div class="login-container">
+    <h3 nz-typography>Sign In</h3>
+    <form
+      nz-form
+      [formGroup]="validateForm"
+      class="login-form"
+      (ngSubmit)="submitForm()"
+    >
+      <nz-form-item>
+        <nz-form-control nzErrorTip="The input is not valid E-mail!">
+          <nz-input-group nzPrefixIcon="user">
+            <input
+              type="text"
+              nz-input
+              formControlName="email"
+              placeholder="email"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Password!">
+          <nz-input-group nzPrefixIcon="lock">
+            <input
+              type="password"
+              nz-input
+              formControlName="password"
+              placeholder="Password"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <button
+        nz-button
+        class="login-form-button login-form-margin"
+        [nzType]="'primary'"
+      >
+        Log in
+      </button>
+      Or
+      <a>Sign up now!</a>
+    </form>
+  </div>
+</div>

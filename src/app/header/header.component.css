@@ -1,4 +1,4 @@
-/* styles.css */
+/* app-header */
 
 nz-header {
   display: flex;
@@ -15,6 +15,10 @@ nz-header {
   cursor: pointer;
 }
 
+/* -------------- */
+
+/* app-header-buttons*/
+
 .menu {
   display: flex;
   margin-right: 25px;
@@ -30,12 +34,39 @@ nz-header {
   margin-bottom: 12px;
 }
 
-nz-button-group [nz-button] {
-  margin-right: 0;
+/* ------------------- */
+
+/* app-header-avatar-dropdown*/
+
+.drop-down {
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.1);
 }
+
+.user-name {
+  padding: 10px;
+}
+
+.name {
+  padding: 5px;
+}
+
+.avatar {
+  cursor: pointer;
+}
+
+/* ------------ */
+
+/* app-header-search */
 
 nz-select {
   width: 200px;
+}
+
+[nz-button] {
+  margin-right: 8px;
+  margin-bottom: 12px;
 }
 
 .nzSelect {
@@ -58,20 +89,4 @@ nz-select {
   align-items: center;
 }
 
-.drop-down {
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.1);
-}
-
-.user-name {
-  padding: 10px;
-}
-
-.name {
-  padding: 5px;
-}
-
-.avatar {
-  cursor: pointer;
-}
+/* ------------ */
