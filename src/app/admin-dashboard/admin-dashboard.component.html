@@ -152,10 +152,18 @@
                     nzErrorTip="Please input user email!"
                   >
                     <input
-                      nz-input
                       formControlName="userEmail"
                       id="userEmail"
+                      placeholder="Search for user email"
+                      nz-input
+                      [(ngModel)]="inputValue"
+                      (ngModelChange)="onChange($event)"
+                      [nzAutocomplete]="auto"
                     />
+                    <nz-autocomplete
+                      [nzDataSource]="filteredOptions"
+                      #auto
+                    ></nz-autocomplete>
                   </nz-form-control>
                 </nz-form-item>
                 <nz-form-item>
@@ -278,6 +286,158 @@
                 <nz-form-item nz-row class="register-area">
                   <nz-form-control [nzSpan]="14" [nzOffset]="6">
                     <button nz-button nzType="primary">Create facility</button>
+                  </nz-form-control>
+                </nz-form-item>
+              </form>
+            </div>
+          </nz-tab>
+          <!-- ----------------Create Court--------- -->
+          <nz-tab [nzTitle]="'Create Court'">
+            <div class="container">
+              <form
+                nz-form
+                [formGroup]="courtForm"
+                (ngSubmit)="submitCourtForm()"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzSpan]="5" nzFor="facilityId" nzRequired
+                    >Facility</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzSpan]="12"
+                    nzErrorTip="Please select facility!"
+                  >
+                    <nz-select
+                      id="facilityId"
+                      formControlName="facilityId"
+                      nzPlaceHolder="Select a facility for court"
+                    >
+                      <nz-option
+                        *ngFor="let option of listOfParentData"
+                        [nzLabel]="option.name"
+                        [nzValue]="option.id"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSpan]="5" nzFor="courtType" nzRequired
+                    >Court Type</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzSpan]="12"
+                    nzErrorTip="Please select court type!"
+                  >
+                    <nz-select
+                      id="courtType"
+                      formControlName="courtType"
+                      nzPlaceHolder="Select type of the court"
+                    >
+                      <nz-option
+                        *ngFor="let option of courtTypesForSelect"
+                        [nzLabel]="option.courtType"
+                        [nzValue]="option.courtType"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSpan]="5" nzRequired nzFor="pricePerHour"
+                    >Price per hour</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzSpan]="12"
+                    nzErrorTip="Please input the price for a hour!"
+                  >
+                    <input
+                      id="pricePerHour"
+                      type="number"
+                      nz-input
+                      formControlName="pricePerHour"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label
+                    [nzSpan]="5"
+                    nzRequired
+                    nzFor="commissionPercentage"
+                    >Commission %</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzSpan]="12"
+                    nzErrorTip="Please input the commission percentage!"
+                  >
+                    <input
+                      id="commissionPercentage"
+                      type="number"
+                      nz-input
+                      formControlName="commissionPercentage"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSpan]="5" nzFor="activities" nzRequired
+                    >Court Activities</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzSpan]="12"
+                    nzErrorTip="Please select court type!"
+                  >
+                    <nz-select
+                      id="activities"
+                      formControlName="activities"
+                      [(ngModel)]="listOfTagOptions"
+                      nzMode="tags"
+                      [nzTokenSeparators]="[',']"
+                      nzPlaceHolder="court activities"
+                    >
+                      <nz-option
+                        *ngFor="let option of activitiesForSelect"
+                        [nzLabel]="option.activityName"
+                        [nzValue]="option.activityName"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSpan]="5" nzFor="courtImages" nzRequired
+                    >Court Images</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzSpan]="12"
+                    nzErrorTip="Please upload images of court"
+                  >
+                    <nz-upload
+                      [(nzFileList)]="fileList"
+                      [nzBeforeUpload]="beforeUpload"
+                    >
+                      <button nz-button>
+                        <span nz-icon nzType="upload"></span>
+                        Select File
+                      </button>
+                    </nz-upload>
+                    <button
+                      nz-button
+                      [nzType]="'primary'"
+                      [nzLoading]="uploading"
+                      (click)="handleUpload()"
+                      [disabled]="fileList.length === 0"
+                      style="margin-top: 16px"
+                    >
+                      {{ uploading ? "Uploading" : "Start Upload" }}
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-control [nzSpan]="12" [nzOffset]="5">
+                    <button nz-button nzType="primary">Submit</button>
                   </nz-form-control>
                 </nz-form-item>
               </form>

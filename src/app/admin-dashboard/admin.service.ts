@@ -2,7 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { Facilities } from './admin-dashboard.component';
+import {
+  Activity,
+  CourtTypes,
+  Courts,
+  Facilities,
+  UserEmails,
+} from './admin-dashboard.component';
 
 @Injectable({
   providedIn: 'root',
@@ -17,18 +23,53 @@ export class AdminService {
     );
   }
 
+  getAllCourtTypes(): Observable<CourtTypes[]> {
+    return this.http
+      .get<CourtTypes[]>('http://localhost:3000/court/types')
+      .pipe(
+        tap((data) => console.log(data)),
+        catchError(this.handleError)
+      );
+  }
+
+  getAllUsersEmail(): Observable<UserEmails[]> {
+    return this.http
+      .get<UserEmails[]>('http://localhost:3000/auth/emails')
+      .pipe(
+        tap((data) => console.log(data)),
+        catchError(this.handleError)
+      );
+  }
+
+  getAllCourtActivities(): Observable<Activity[]> {
+    return this.http.get<Activity[]>('http://localhost:3000/activity').pipe(
+      tap((data) => console.log(data)),
+      catchError(this.handleError)
+    );
+  }
+
   createFacility(facility: Facilities): Observable<Facilities> {
-    const userId: number = 1;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.http
-      .post<Facilities>(
-        `http://localhost:3000/facility/user/${userId}`,
-        facility,
-        { headers }
-      )
+      .post<Facilities>(`http://localhost:3000/facility`, facility, {
+        headers,
+      })
       .pipe(
         tap((data) => console.log('createFacility: ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+  }
+
+  createCourt(court: Courts): Observable<Courts> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http
+      .post<Courts>(`http://localhost:3000/court`, court, {
+        headers,
+      })
+      .pipe(
+        tap((data) => console.log('createCourt: ' + JSON.stringify(data))),
         catchError(this.handleError)
       );
   }

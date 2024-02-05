@@ -31,6 +31,8 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
@@ -41,6 +43,8 @@ import { CoutPageComponent } from './cout-page/cout-page.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { SportFilterComponent } from './sport-filter/sport-filter.component';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 registerLocaleData(en);
 
@@ -81,6 +85,10 @@ registerLocaleData(en);
     NzFormModule,
     NzTabsModule,
     NzBadgeModule,
+    NzUploadModule,
+    NzModalModule,
+    NzMessageModule,
+    NzAutocompleteModule,
 
     ReactiveFormsModule,
 
