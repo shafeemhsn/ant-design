@@ -1,4 +1,30 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AdminService } from '../admin-dashboard/admin.service';
+
+export interface FacilityHomepage {
+  facilityId?: number;
+  facilityName?: string;
+  facilityLocation?: string;
+  profileUrl?: string;
+  courts: CourtHomepage;
+}
+
+export interface CourtHomepage {
+  courtId?: number;
+  courtType?: string;
+  pricePerHr?: number;
+  activities?: string[];
+  courtImage?: string[];
+}
+
+export interface CourtGrid {
+  name?: number;
+  location?: string;
+  type?: number;
+  activity: string[];
+  price?: string;
+  imageUrl: string[];
+}
 
 @Component({
   selector: 'app-sport-filter',
@@ -7,9 +33,20 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class SportFilterComponent implements OnInit {
   nzSpan = 2.5;
-  constructor() {}
 
-  ngOnInit(): void {}
+  courtGrid: any[] = [];
+  errorMessage: any;
+
+  constructor(private adminService: AdminService) {}
+
+  ngOnInit(): void {
+    this.adminService.getAllFacilitiesForHomePage().subscribe({
+      next: (courts) => {
+        this.courtGrid = courts;
+      },
+      error: (err) => (this.errorMessage = err),
+    });
+  }
   sports = [
     'Futsal',
     'Cricket',

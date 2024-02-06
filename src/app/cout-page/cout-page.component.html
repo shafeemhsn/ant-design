@@ -32,14 +32,28 @@
   </div>
 
   <div>
-    <img
-      class="main-img"
-      nz-image
-      width="560px"
-      height="362px"
-      nzSrc="/assets/court/set2-17.jpg"
-      alt=""
-    />
+    <nz-image-group
+      style="display: flex; justify-content: center; align-items: center"
+    >
+      <img
+        style="margin: 10px"
+        class="main-img"
+        nz-image
+        width="560px"
+        height="362px"
+        nzSrc="/assets/court/set2-17.jpg"
+        alt=""
+      />
+      <img
+        style="margin: 10px"
+        class="main-img"
+        nz-image
+        width="560px"
+        height="362px"
+        nzSrc="https://sf-booking-images.s3.ap-southeast-1.amazonaws.com/IMG_20210412_200742_323.jpg1707203360009"
+        alt=""
+      />
+    </nz-image-group>
   </div>
 
   <nz-divider></nz-divider>
@@ -75,8 +89,12 @@
 
   <nz-divider></nz-divider>
   <div style="text-align: center">
-    <p class="time-select-text">2 hour(s) selected</p>
-    <h1>LKR 9,000.00</h1>
+    <p class="time-select-text">
+      {{ selectedSlots.length / 2 }} hour(s) selected
+    </p>
+    <h1>
+      LKR {{ (selectedSlots.length * hourlyRate) / 2 | number : "1.2-2" }}
+    </h1>
     <button nz-button nzType="primary" [nzSize]="size">Reserve</button>
   </div>
 

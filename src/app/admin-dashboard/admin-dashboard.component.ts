@@ -66,7 +66,7 @@ export class AdminDashboardComponent implements OnInit {
   courtForm!: FormGroup;
 
   errorMessage!: string;
-  newCourtId!: number;
+  newCourtId!: number | null;
 
   uploading = false;
   fileList: NzUploadFile[] = [];
@@ -237,9 +237,11 @@ export class AdminDashboardComponent implements OnInit {
           this.newCourtId = response.newCourtId;
           if (!this.fileList.length) {
             this.onSaveComplete(this.courtForm);
+            this.newCourtId = null;
             this.msg.success('Court saved successfully.');
           } else {
             this.handleUpload();
+            this.newCourtId = null;
             this.onSaveComplete(this.courtForm);
             this.msg.success('Court saved successfully.');
           }

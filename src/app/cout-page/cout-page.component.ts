@@ -14,6 +14,9 @@ import { toggleSlot } from './state/court.actions';
 export class CoutPageComponent implements OnInit {
   slots: any = [];
 
+  selectedSlots: Slot[] = []; // Array to store selected slots
+  hourlyRate: number = 4500; // Hourly rate
+
   size: NzButtonSize = 'large';
   inputObject = [
     {
@@ -116,11 +119,6 @@ export class CoutPageComponent implements OnInit {
     return output;
   };
 
-  // toggleSlots(slot: any) {
-  //   console.log(slot);
-  //   this.store.dispatch(toggleSlot({ slot }));
-  // }
-
   toggleSlots(slot: any) {
     console.log('click: ' + JSON.stringify(slot));
 
@@ -129,7 +127,7 @@ export class CoutPageComponent implements OnInit {
     if (slot.status === 'available') {
       // Mark the clicked slot as 'selected'
       slot.status = 'selected';
-
+      this.selectedSlots.push(slot);
       // Find the last selected slot
       const lastSelectedIndex = this.slots
         .slice(0, selectedIndex)
@@ -151,67 +149,13 @@ export class CoutPageComponent implements OnInit {
       // Deselect the clicked slot
 
       slot.status = 'available';
+      this.selectedSlots.splice(selectedIndex, 1);
 
       // Re-enable all previous slots
-
-      // this.slots.slice(0, selectedIndex).forEach((s: any) => {
-      //   if (s.status !== 'selected') {
-      //     s.status = 'available';
-      //   }
-      // });
     }
+
+    // Calculate total price
+    const totalPrice = this.selectedSlots.length * this.hourlyRate;
+    console.log('selected slots:', this.selectedSlots); // Output total price to console
   }
 }
-
-// toggleSlots(slot: any) {
-//   if (slot.status === 'available') {
-//     // Mark the clicked slot as 'selected'
-//     slot.status = 'selected';
-
-//     // Disable all previous slots
-//     const selectedIndex = this.slots.findIndex((s: any) => s === slot);
-//     this.slots.slice(0, selectedIndex).forEach((s: any) => {
-//       if (s.status !== 'selected') {
-//         s.status = 'unavailable';
-//       }
-//       console.log(selectedIndex);
-//     });
-//   } else if (slot.status === 'selected') {
-//     // Deselect the clicked slot
-//     slot.status = 'available';
-
-//     // Re-enable all previous slots
-//     const selectedIndex = this.slots.findIndex((s: any) => s === slot);
-//     this.slots.slice(0, selectedIndex).forEach((s: any) => {
-//       if (s.status === 'unavailable') {
-//         s.status = 'available';
-//       }
-//     });
-//   }
-// }
-
-// toggleSlots(slot: any) {
-//   const selectedIndex = this.slots.findIndex((s: any) => s === slot);
-
-//   // Deselect the clicked slot
-//   if (slot.status === 'selected') {
-//     slot.status = 'available';
-
-//     // Re-enable all previous slots, including reserved ones
-//     this.slots.slice(0, selectedIndex).forEach((s: any) => {
-//       if (s.status !== 'selected') {
-//         s.status = 'available';
-//       }
-//     });
-//   } else if (slot.status === 'available') {
-//     // Mark the clicked slot as 'selected'
-//     slot.status = 'selected';
-
-//     // Disable all previous slots
-//     this.slots.slice(0, selectedIndex).forEach((s: any) => {
-//       if (s.status !== 'selected') {
-//         s.status = 'unavailable';
-//       }
-//     });
-//   }
-// }

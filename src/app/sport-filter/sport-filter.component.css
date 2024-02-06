@@ -7,7 +7,7 @@ nz-card {
   border-radius: 15px;
 }
 
-img {
+.activity-img {
   border-radius: 15px;
 }
 
@@ -17,8 +17,9 @@ img {
   font-weight: bold;
 }
 
-.fac-img {
+.court-img {
   /* width: 260px; */
+  border-radius: 15px;
   height: 210px;
   object-fit: cover;
 }
@@ -27,6 +28,7 @@ img {
   width: 288px;
   height: 280px;
   background-color: transparent;
+  margin-bottom: 38px;
 }
 
 .court-text {
@@ -39,9 +41,22 @@ img {
   font-weight: bold;
 }
 
-.court-desc {
-  margin-top: -10px;
+.court-location-text {
+  margin-top: -15px;
+  font-size: 12px;
 }
-.main-img {
-  border-radius: 15px;
+
+.court-activity-text {
+  margin-top: -15px;
+  font-style: italic;
+}
+
+.court-type {
+  margin-top: -7px;
+}
+
+.court-price-text {
+  font-weight: bold;
+  margin-top: -57px;
+  text-align: right;
 }

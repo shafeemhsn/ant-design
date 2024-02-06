@@ -9,12 +9,22 @@ import {
   Facilities,
   UserEmails,
 } from './admin-dashboard.component';
+import { FacilityHomepage } from '../sport-filter/sport-filter.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminService {
   constructor(private http: HttpClient) {}
+
+  getAllFacilitiesForHomePage(): Observable<FacilityHomepage[]> {
+    return this.http
+      .get<FacilityHomepage[]>('http://localhost:3000/facility/homepage')
+      .pipe(
+        tap((data) => console.log(data)),
+        catchError(this.handleError)
+      );
+  }
 
   getAllFacilities(): Observable<Facilities[]> {
     return this.http.get<Facilities[]>('http://localhost:3000/facility').pipe(
