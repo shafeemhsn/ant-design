@@ -1,0 +1,164 @@
+<div style="background: #ececec; padding: 30px">
+  <div nz-row [nzGutter]="8">
+    <div nz-col [nzSpan]="8">
+      <nz-card nzTitle="">
+        <p style="margin-top: -22px">Disclaimer</p>
+        <p>
+          1. Once a court booking is confirmed, it cannot be exchanged or
+          refunded.
+        </p>
+        <p>
+          2. No refund is possible for a booked court, even in the event of
+          rescheduling.
+        </p>
+        <p>
+          3. A booked court slot is valid only for the specified time and cannot
+          be exchanged for other slots.
+        </p>
+        <p>
+          4. Please ensure you arrive at the court at least 15 minutes prior to
+          your booking time.
+        </p>
+        <p>
+          5. Court availability is subject to facility permissions. If the
+          facility is closed or unavailable for any reason, a refund will be
+          issued.
+        </p>
+        <p>
+          6. Any attempt to resell a court booking is strictly prohibited and
+          may result in cancellation without refund.
+        </p>
+        <p>
+          7. Each court booking is valid for the designated number of players
+          only.
+        </p>
+        <p>8. An internet handling fee may be applied to each court booking.</p>
+        <p>
+          9. Security checks may be conducted at the facility entry point for
+          the safety of all users.
+        </p>
+        <p>
+          10. Persons under the influence of alcohol or any substances will not
+          be permitted to use the court.
+        </p>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-card nzTitle="" style="margin-left: -8px">
+        <p>
+          11. The facility management is not liable for any injury, damage, or
+          loss incurred during the use of the court.
+        </p>
+        <p>
+          12. Parking at or near the facility is at the vehicle owner's risk.
+          The facility management is not responsible for any damage or theft.
+        </p>
+        <p>
+          13. Professional cameras, recording equipment, weapons, narcotics,
+          food, drinks, alcohol, and pets are not allowed on the court premises.
+        </p>
+        <p>
+          14. A court booking permits access only to the designated court.
+          Additional facilities or services may require separate bookings.
+        </p>
+        <p>
+          15. The facility reserves the right to refuse admission to anyone not
+          complying with these terms and conditions.
+        </p>
+        <p>
+          16. Individuals suspected of carrying items that may pose a threat or
+          engaging in illegal activities may be asked to leave the premises.
+        </p>
+        <p>
+          17. By booking a court, you grant the facility the right to use any
+          recordings or images of your activity for promotional purposes.
+        </p>
+        <p>
+          18. The facility reserves the right to refuse admission or eject any
+          individual violating these terms and conditions.
+        </p>
+        <p>
+          19. For inquiries or assistance, please contact
+          <a href=""> lkhelpdesk@sfbookin.com.</a>
+        </p>
+        <p></p>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-card nzTitle="BOOKING SUMMARY" style="text-align: center">
+        <nz-list>
+          <nz-list-item>
+            <span nz-typography style="text-align: left">
+              <b>CR7 Futsal & Indoor Cricket Court</b> <br /><em>(2 Hours)</em
+              ><br />
+              Indoor Court</span
+            >
+            <b>Rs. 9000/-</b>
+          </nz-list-item>
+
+          <nz-list-item>
+            <span nz-typography>
+              <em>Internat handling fees</em>
+            </span>
+            Rs. 450/-
+          </nz-list-item>
+
+          <nz-list-item style="background-color: #fff3d2">
+            <span nz-typography> AMOUNT PAYABLE </span>
+            <b>Rs. 9,450/-</b>
+          </nz-list-item>
+        </nz-list>
+        <nz-divider></nz-divider>
+        <nz-card
+          style="text-align: center; background-color: #eeeded"
+          nzTitle="SELECT YOUR PAYMENT MODE"
+        >
+          <nz-list>
+            <nz-list-item>
+              <label
+                nz-checkbox
+                [(ngModel)]="checkedPayment"
+                style="text-align: left; background-color: transparent"
+              >
+                <img
+                  style="justify-content: left"
+                  width="175px"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk75Km3ucZkb9s-0k4eRAHDJiCHllh9WEfXQ&usqp=CAU"
+                  alt=""
+                />
+              </label>
+            </nz-list-item>
+          </nz-list>
+        </nz-card>
+      </nz-card>
+
+      <nz-card
+        class="head"
+        nzType="inner"
+        style="margin-top: 16px; text-align: center"
+        nzTitle="Note: Please accept below self declaration before proceeding"
+      >
+        <label
+          nz-checkbox
+          [(ngModel)]="checked"
+          style="text-align: left; background-color: transparent"
+        >
+          I have confirmed the sport court name, booking date, and time before
+          proceeding to payment. Once a court is booked, modifications or
+          refunds are not permitted by the facility.</label
+        >
+
+        <button
+          nz-button
+          nzType="primary"
+          nzBlock
+          [nzSize]="size"
+          style="margin-top: 15px"
+          [disabled]="!checked || !checkedPayment"
+        >
+          Primary
+        </button>
+      </nz-card>
+    </div>
+  </div>
+</div>

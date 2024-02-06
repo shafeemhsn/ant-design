@@ -33,6 +33,9 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { NzListModule } from 'ng-zorro-antd/list';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
@@ -45,6 +48,7 @@ import { SportFilterComponent } from './sport-filter/sport-filter.component';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { ReservationPageComponent } from './reservation-page/reservation-page.component';
 
 registerLocaleData(en);
 
@@ -58,6 +62,7 @@ registerLocaleData(en);
     SignUpComponent,
     AdminDashboardComponent,
     SignInComponent,
+    ReservationPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,6 +94,8 @@ registerLocaleData(en);
     NzModalModule,
     NzMessageModule,
     NzAutocompleteModule,
+    NzListModule,
+    NzCheckboxModule,
 
     ReactiveFormsModule,
 
