@@ -66,6 +66,7 @@ export class AdminDashboardComponent implements OnInit {
   courtForm!: FormGroup;
 
   errorMessage!: string;
+  newCourtId!: number;
 
   uploading = false;
   fileList: NzUploadFile[] = [];
@@ -213,7 +214,10 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   beforeUpload = (file: NzUploadFile): boolean => {
-    this.fileList = this.fileList.concat(file);
+    // Check if the file is being selected and not removed
+    if (!file.url && !file.thumbUrl) {
+      this.fileList = this.fileList.concat(file);
+    }
     return false;
   };
 
@@ -228,13 +232,17 @@ export class AdminDashboardComponent implements OnInit {
         commissionPercentage: this.courtForm.value.commissionPercentage,
         activities: this.courtForm.value.activities,
       };
-
-      console.log('createFacility: ' + courtDetails);
-      console.log('loggg');
       this.adminService.createCourt(courtDetails).subscribe({
-        next: () => {
-          this.onSaveComplete();
-          this.msg.success('Court saved successfully.');
+        next: (response) => {
+          this.newCourtId = response.newCourtId;
+          if (!this.fileList.length) {
+            this.onSaveComplete(this.courtForm);
+            this.msg.success('Court saved successfully.');
+          } else {
+            this.handleUpload();
+            this.onSaveComplete(this.courtForm);
+            this.msg.success('Court saved successfully.');
+          }
         },
         error: (err) => {
           this.errorMessage = err;
@@ -243,7 +251,7 @@ export class AdminDashboardComponent implements OnInit {
         },
       });
     } else {
-      Object.values(this.facilityForm.controls).forEach((control) => {
+      Object.values(this.courtForm.controls).forEach((control) => {
         if (control.invalid) {
           control.markAsDirty();
           control.updateValueAndValidity({ onlySelf: true });
@@ -262,7 +270,7 @@ export class AdminDashboardComponent implements OnInit {
     // You can use any AJAX library you like
     const req = new HttpRequest(
       'POST',
-      `http://localhost:3000/court/2/upload-files`,
+      `http://localhost:3000/court/${this.newCourtId}/upload-files`,
       formData,
       {
         // reportProgress: true
@@ -275,7 +283,7 @@ export class AdminDashboardComponent implements OnInit {
         (res) => {
           this.uploading = false;
           this.fileList = [];
-          this.msg.success('upload successfully.');
+          this.msg.success('court image uploaded successfully.');
         },
         () => {
           this.uploading = false;
@@ -295,11 +303,9 @@ export class AdminDashboardComponent implements OnInit {
         contactNo: +this.facilityForm.value.contactNumber,
         profileUrl: this.facilityForm.value.profileUrl,
       };
-
-      console.log('createFacility: ' + JSON.stringify(facilityDetails));
       this.adminService.createFacility(facilityDetails).subscribe({
         next: () => {
-          this.onSaveComplete();
+          this.onSaveComplete(this.facilityForm);
           this.msg.success('Facility saved successfully.');
         },
         error: (err) => {
@@ -334,9 +340,9 @@ export class AdminDashboardComponent implements OnInit {
     );
   }
 
-  onSaveComplete(): void {
+  onSaveComplete(form: any): void {
     // Reset the form to clear the flags
-    this.facilityForm.reset();
+    form.reset();
     // this.router.navigate(['/products']);
   }
 }

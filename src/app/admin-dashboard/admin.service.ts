@@ -61,7 +61,7 @@ export class AdminService {
       );
   }
 
-  createCourt(court: Courts): Observable<Courts> {
+  createCourt(court: Courts): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.http

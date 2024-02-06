@@ -417,27 +417,30 @@
                       [(nzFileList)]="fileList"
                       [nzBeforeUpload]="beforeUpload"
                     >
-                      <button nz-button>
-                        <span nz-icon nzType="upload"></span>
+                      <!-- work around to avoid submit when button clicked(if button form getting submitted) -->
+                      <div
+                        class="select"
+                        [ngStyle]="{
+                          'line-height': '1.5715',
+                          'font-size': '14px',
+                          padding: '10px 20px',
+                          'background-color': '#1f618d',
+                          color: '#fff',
+                          'white-space': 'nowrap',
+                          cursor: 'pointer'
+                        }"
+                      >
                         Select File
-                      </button>
+                      </div>
                     </nz-upload>
-                    <button
-                      nz-button
-                      [nzType]="'primary'"
-                      [nzLoading]="uploading"
-                      (click)="handleUpload()"
-                      [disabled]="fileList.length === 0"
-                      style="margin-top: 16px"
-                    >
-                      {{ uploading ? "Uploading" : "Start Upload" }}
-                    </button>
                   </nz-form-control>
                 </nz-form-item>
 
                 <nz-form-item>
                   <nz-form-control [nzSpan]="12" [nzOffset]="5">
-                    <button nz-button nzType="primary">Submit</button>
+                    <button nz-button nzType="primary" [nzLoading]="uploading">
+                      {{ uploading ? "Uploading" : "Submit and upload" }}
+                    </button>
                   </nz-form-control>
                 </nz-form-item>
               </form>
