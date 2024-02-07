@@ -56,6 +56,11 @@ export interface UserEmails {
   email: string;
 }
 
+export interface Cities {
+  id?: number;
+  cityName: string;
+}
+
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
@@ -78,7 +83,11 @@ export class AdminDashboardComponent implements OnInit {
   courtTypesForSelect: CourtTypes[] = [];
   activitiesForSelect: Activity[] = [];
 
-  selectedValue: string | null = null; // Add this line
+  selectedCity = null;
+
+  cityList: Cities[] = [];
+
+  selectedValue: string | null = null;
 
   listOfOption: Array<{ label: string; value: string }> = [];
   listOfTagOptions = [];
@@ -120,6 +129,13 @@ export class AdminDashboardComponent implements OnInit {
       pricePerHour: [null, [Validators.required]],
       commissionPercentage: [null, [Validators.required]],
       activities: [[null], [Validators.required as Validators]],
+    });
+
+    this.adminService.getAllCitiesForDropDown().subscribe({
+      next: (cities) => {
+        this.cityList = cities;
+      },
+      error: (err) => (this.errorMessage = err),
     });
 
     this.adminService.getAllCourtActivities().subscribe({

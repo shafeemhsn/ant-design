@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import {
   Activity,
+  Cities,
   CourtTypes,
   Courts,
   Facilities,
@@ -16,6 +17,15 @@ import { FacilityHomepage } from '../sport-filter/sport-filter.component';
 })
 export class AdminService {
   constructor(private http: HttpClient) {}
+
+  getAllCitiesForDropDown(): Observable<Cities[]> {
+    return this.http
+      .get<Cities[]>('http://localhost:3000/location/cities')
+      .pipe(
+        tap((data) => console.log(data)),
+        catchError(this.handleError)
+      );
+  }
 
   getAllFacilitiesForHomePage(): Observable<FacilityHomepage[]> {
     return this.http

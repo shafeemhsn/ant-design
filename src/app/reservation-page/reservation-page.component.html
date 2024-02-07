@@ -1,4 +1,12 @@
-<div style="background: #ececec; padding: 30px">
+<div
+  style="
+    background: #ececec;
+    padding: 10px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+      sans-serif;
+  "
+>
   <div nz-row [nzGutter]="8">
     <div nz-col [nzSpan]="8">
       <nz-card nzTitle="">
@@ -89,7 +97,7 @@
         <nz-list>
           <nz-list-item>
             <span nz-typography style="text-align: left">
-              <b>CR7 Futsal & Indoor Cricket Court</b> <br /><em>(2 Hours)</em
+              <b>CR7 Futsal & Indoor Cricket Court</b> <br /><em>(2)Hours</em
               ><br />
               Indoor Court</span
             >
@@ -108,32 +116,25 @@
             <b>Rs. 9,450/-</b>
           </nz-list-item>
         </nz-list>
-        <nz-divider></nz-divider>
-        <nz-card
-          style="text-align: center; background-color: #eeeded"
-          nzTitle="SELECT YOUR PAYMENT MODE"
+
+        <nz-list
+          nzBordered
+          nzHeader="SELECT YOUR PAYMENT MODE"
+          style="margin-top: 10px; font-weight: bold; font-size: 15px"
         >
-          <nz-list>
-            <nz-list-item>
-              <label
-                nz-checkbox
-                [(ngModel)]="checkedPayment"
-                style="text-align: left; background-color: transparent"
-              >
-                <img
-                  style="justify-content: left"
-                  width="175px"
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk75Km3ucZkb9s-0k4eRAHDJiCHllh9WEfXQ&usqp=CAU"
-                  alt=""
-                />
-              </label>
-            </nz-list-item>
-          </nz-list>
-        </nz-card>
+          <nz-list-item>
+            <label nz-checkbox [(ngModel)]="checkedPayment">
+              <img
+                width="175px"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk75Km3ucZkb9s-0k4eRAHDJiCHllh9WEfXQ&usqp=CAU"
+                alt=""
+              />
+            </label>
+          </nz-list-item>
+        </nz-list>
       </nz-card>
 
       <nz-card
-        class="head"
         nzType="inner"
         style="margin-top: 16px; text-align: center"
         nzTitle="Note: Please accept below self declaration before proceeding"
@@ -156,7 +157,7 @@
           style="margin-top: 15px"
           [disabled]="!checked || !checkedPayment"
         >
-          Primary
+          MAKE PAYMENT
         </button>
       </nz-card>
     </div>
