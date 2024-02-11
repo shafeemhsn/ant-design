@@ -35,11 +35,11 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzResultModule } from 'ng-zorro-antd/result';
+import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { courtReducer } from './cout-page/state/court.reducer';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { StoreModule } from '@ngrx/store';
 import { CoutPageComponent } from './cout-page/cout-page.component';
@@ -49,6 +49,9 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { ReservationPageComponent } from './reservation-page/reservation-page.component';
+import { PayHereCheckoutComponent } from './pay-here-checkout/pay-here-checkout.component';
+import { PaymentSuccessComponent } from './payment-success/payment-success.component';
+import { PaymentFailedComponent } from './payment-failed/payment-failed.component';
 
 registerLocaleData(en);
 
@@ -63,6 +66,9 @@ registerLocaleData(en);
     AdminDashboardComponent,
     SignInComponent,
     ReservationPageComponent,
+    PayHereCheckoutComponent,
+    PaymentSuccessComponent,
+    PaymentFailedComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,10 +102,10 @@ registerLocaleData(en);
     NzAutocompleteModule,
     NzListModule,
     NzCheckboxModule,
+    NzResultModule,
+    NzCarouselModule,
 
     ReactiveFormsModule,
-
-    StoreModule.forRoot({ court: courtReducer }),
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent],

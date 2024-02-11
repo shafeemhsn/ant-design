@@ -342,22 +342,6 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-  confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
-    if (!control.value) {
-      return { required: true };
-    } else if (control.value !== this.facilityForm.controls.password.value) {
-      return { confirm: true, error: true };
-    }
-    return {};
-  };
-
-  updateConfirmValidator(): void {
-    /** wait for refresh value */
-    Promise.resolve().then(() =>
-      this.facilityForm.controls.checkPassword.updateValueAndValidity()
-    );
-  }
-
   onSaveComplete(form: any): void {
     // Reset the form to clear the flags
     form.reset();

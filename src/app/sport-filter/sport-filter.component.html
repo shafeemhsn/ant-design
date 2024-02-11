@@ -14,143 +14,34 @@
       [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }"
       nzJustify="center"
     >
-      <div nz-col class="gutter-row" [nzSpan]="nzSpan">
+      <div
+        nz-col
+        class="gutter-row"
+        [nzSpan]="nzSpan"
+        *ngFor="let activity of activities"
+      >
         <nz-card
           nzHoverable
           style="width: 120px"
-          [nzCover]="swimming"
+          [nzCover]="activityCard"
           class="sport-card"
         >
           <nz-card-meta
-            class="cat-font"
-            nzDescription="Swimming"
+            class="activity-description"
+            nzDescription="{{ activity.name }}"
           ></nz-card-meta>
         </nz-card>
-        <ng-template #swimming>
+        <ng-template #activityCard>
           <img
             class="activity-img"
-            alt="swimming"
-            src="/assets/images/swimming.jpg"
+            alt="{{ activity.name }}"
+            src="{{ activity.image }}"
           />
         </ng-template>
       </div>
-
-      <div nz-col class="gutter-row" [nzSpan]="nzSpan">
-        <nz-card
-          nzHoverable
-          style="width: 120px"
-          [nzCover]="cricket"
-          class="sport-card"
-        >
-          <nz-card-meta class="cat-font" nzDescription="Cricket"></nz-card-meta>
-        </nz-card>
-        <ng-template #cricket>
-          <img alt="cricket" src="/assets/images/cricket.png" />
-        </ng-template>
-      </div>
-
-      <div nz-col class="gutter-row" [nzSpan]="nzSpan">
-        <nz-card
-          nzHoverable
-          style="width: 120px"
-          [nzCover]="football"
-          class="sport-card"
-        >
-          <nz-card-meta
-            class="cat-font"
-            nzDescription="Football"
-          ></nz-card-meta>
-        </nz-card>
-        <ng-template #football>
-          <img alt="football" src="/assets/images/football.png" />
-        </ng-template>
-      </div>
-
-      <div nz-col class="gutter-row" [nzSpan]="nzSpan">
-        <nz-card
-          nzHoverable
-          style="width: 120px"
-          [nzCover]="badminton"
-          class="sport-card"
-        >
-          <nz-card-meta
-            class="cat-font"
-            nzDescription="Badminton"
-          ></nz-card-meta>
-        </nz-card>
-        <ng-template #badminton>
-          <img alt="swimming" src="/assets/images/badminton.png" />
-        </ng-template>
-      </div>
-
-      <div nz-col class="gutter-row" [nzSpan]="nzSpan">
-        <nz-card
-          nzHoverable
-          style="width: 120px"
-          [nzCover]="futsal"
-          class="sport-card"
-        >
-          <nz-card-meta class="cat-font" nzDescription="Futsal"></nz-card-meta>
-        </nz-card>
-        <ng-template #futsal>
-          <img alt="futsal" src="/assets/images/futsal.png" />
-        </ng-template>
-      </div>
-
-      <div nz-col class="gutter-row" [nzSpan]="nzSpan">
-        <nz-card
-          nzHoverable
-          style="width: 120px"
-          [nzCover]="volleyball"
-          class="sport-card"
-        >
-          <nz-card-meta
-            class="cat-font"
-            nzDescription="Volleyball"
-          ></nz-card-meta>
-        </nz-card>
-        <ng-template #volleyball>
-          <img alt="volleyball" src="/assets/images/volleyball.png" />
-        </ng-template>
-      </div>
-
-      <div nz-col class="gutter-row" [nzSpan]="nzSpan">
-        <nz-card
-          nzHoverable
-          style="width: 120px"
-          [nzCover]="tableTennis"
-          class="sport-card"
-        >
-          <nz-card-meta
-            class="cat-font"
-            nzDescription="Table Tennis"
-          ></nz-card-meta>
-        </nz-card>
-        <ng-template #tableTennis>
-          <img alt="table-tennis" src="/assets/images/table-tennis.png" />
-        </ng-template>
-      </div>
-
-      <div nz-col class="gutter-row" [nzSpan]="nzSpan">
-        <nz-card
-          nzHoverable
-          style="width: 120px"
-          [nzCover]="basketball"
-          class="sport-card"
-        >
-          <nz-card-meta
-            class="cat-font"
-            nzDescription="Basketball"
-          ></nz-card-meta>
-        </nz-card>
-        <ng-template #basketball>
-          <img alt="basketball" src="/assets/images/basketball.png" />
-        </ng-template>
-      </div>
     </div>
-    <!--////////////////////////////////////////////////////////////// -->
     <nz-divider></nz-divider>
-
+    <!-- Court cards -->
     <div>
       <div
         nz-row
@@ -178,7 +69,7 @@
               <img
                 class="court-img"
                 alt="{{ court.facilityName }} - {{ court.courtType }}"
-                src="{{ court.courtImage[0] }}"
+                src="{{ court.courtImage[1] }}"
               />
             </ng-template>
           </a>

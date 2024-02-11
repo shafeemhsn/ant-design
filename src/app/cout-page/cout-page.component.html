@@ -9,10 +9,16 @@
   "
 >
   <div>
-    <p class="price-text">Price /hr.: 4,500/-</p>
-    <h2 nz-typography>CR7 Futsal & Indoor Cricket Court</h2>
-    <p class="court-text">Activities: Futsal Court, Cricket</p>
-    <div style="display: inline-block; vertical-align: middle">
+    <p class="price-text">
+      Price /hr.: <b>LKR {{ courtDetails.pricePerHr | number : "1.2-2" }}</b>
+    </p>
+    <h2 nz-typography>{{ courtDetails.facilityName }}</h2>
+    <p class="court-text">
+      {{ courtDetails.activities.join(", ") }}
+    </p>
+    <p class="court-type-text">{{ courtDetails.courtType }}</p>
+
+    <div style="display: inline-block; vertical-align: middle; font-size: 18px">
       <i nz-icon>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +41,7 @@
           font-weight: bold;
         "
       >
-        Colombo 5
+        {{ courtDetails.facilityLocation }}
       </p>
     </div>
   </div>
@@ -45,27 +51,49 @@
       style="display: flex; justify-content: center; align-items: center"
     >
       <img
-        style="margin: 10px"
+        style="margin: 10px; object-fit: cover"
         class="main-img"
         nz-image
         width="560px"
         height="362px"
-        nzSrc="/assets/court/set2-17.jpg"
+        nzSrc="{{ courtDetails.courtImage[0] }}"
         alt=""
       />
       <img
-        style="margin: 10px"
+        style="margin: 10px; object-fit: cover"
         class="main-img"
         nz-image
         width="560px"
         height="362px"
-        nzSrc="https://sf-booking-images.s3.ap-southeast-1.amazonaws.com/IMG_20210412_200742_323.jpg1707203360009"
+        nzSrc="{{ courtDetails.courtImage[1] }}"
         alt=""
       />
     </nz-image-group>
   </div>
 
-  <nz-divider></nz-divider>
+  <nz-divider
+    style="font-size: 20px"
+    nzText="Date: {{ dataToGetSlots.date }}"
+  ></nz-divider>
+  <div class="search-group" style="text-align: center; margin-bottom: 20px">
+    <nz-date-picker
+      class="datePicker"
+      nzFormat="yyyy-MM-dd"
+      ngModel
+      (ngModelChange)="onChange($event)"
+    ></nz-date-picker>
+
+    <button
+      nz-button
+      nzType="primary"
+      class="search-button"
+      (click)="searchSlots()"
+    >
+      <i nz-icon nzType="search"></i>
+      Search
+    </button>
+  </div>
+
   <div style="display: flex">
     <div
       class="slots"
@@ -81,7 +109,7 @@
           }"
           (click)="toggleSlots(slot)"
         >
-          <a>{{ slot.name | date : "hh:mm a" }} </a>
+          <a>{{ slot.timeSlot | date : "hh:mm a" }} </a>
         </button>
       </div>
     </div>
@@ -104,7 +132,14 @@
     <h1>
       LKR {{ (selectedSlots.length * hourlyRate) / 2 | number : "1.2-2" }}
     </h1>
-    <button nz-button nzType="primary" [nzSize]="size">Reserve</button>
+    <button
+      nz-button
+      nzType="primary"
+      [nzSize]="size"
+      [disabled]="selectedSlots.length === 0"
+    >
+      Reserve
+    </button>
   </div>
 
   <nz-divider></nz-divider>

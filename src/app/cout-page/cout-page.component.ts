@@ -1,10 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { NzButtonSize } from 'ng-zorro-antd/button';
-import { CourtSchedule, Slot } from './slot-info';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { CourtState } from './state/court-state';
-import { toggleSlot } from './state/court.actions';
+
+import { DateTime } from 'luxon';
+
+import { AdminService } from '../admin-dashboard/admin.service';
+import { CourtSlotAvailability } from './court.interface';
+
+export interface ReservationData {
+  userId: number;
+  courtId: number;
+  startTime: Date;
+  endTime: Date;
+}
+
+export interface CourtDetails {
+  courtId: number;
+  facilityName: string;
+  courtType: string;
+  activities: string[];
+  facilityLocation: string;
+  pricePerHr: number;
+  courtImage: string[];
+}
+
+export interface CourtSchedule {
+  courtId: string;
+  date: string | Date | any;
+  slots: { [key: string]: number };
+}
+
+export interface DataToGetSlots {
+  courtId: number;
+  date: string | null;
+}
+
+export interface Slot {
+  timeSlot: any;
+  status: string;
+}
 
 @Component({
   selector: 'app-cout-page',
@@ -14,88 +47,152 @@ import { toggleSlot } from './state/court.actions';
 export class CoutPageComponent implements OnInit {
   slots: any = [];
 
-  selectedSlots: Slot[] = []; // Array to store selected slots
-  hourlyRate: number = 4500; // Hourly rate
+  dataForReservation!: ReservationData;
+
+  errorMessage: any;
+
+  dataToGetSlots: DataToGetSlots = {
+    courtId: 3,
+    date: '2023-11-13',
+  };
+
+  courtDetails!: CourtDetails;
+
+  retrievedSlots: any;
+
+  courtId: number = 3;
+
+  selectedSlots: Slot[] = [];
+
+  hourlyRate!: number;
 
   size: NzButtonSize = 'large';
-  inputObject = [
-    {
-      court: '2',
-      date: '2023-11-13 00:00:00',
-      slots: {
-        slot1: 2,
-        slot2: 2,
-        slot3: 2,
-        slot4: 2,
-        slot5: 2,
-        slot6: 2,
-        slot7: 2,
-        slot8: 2,
-        slot9: 2,
-        slot10: 2,
-        slot11: 2,
-        slot12: 2,
-        slot13: 2,
-        slot14: 2,
-        slot15: 2,
-        slot16: 2,
-        slot17: 0,
-        slot18: 0,
-        slot19: 0,
-        slot20: 0,
-        slot21: 0,
-        slot22: 0,
-        slot23: 0,
-        slot24: 0,
-        slot25: 3,
-        slot26: 3,
-        slot27: 0,
-        slot28: 0,
-        slot29: 0,
-        slot30: 0,
-        slot31: 1,
-        slot32: 1,
-        slot33: 0,
-        slot34: 0,
-        slot35: 0,
-        slot36: 0,
-        slot37: 0,
-        slot38: 0,
-        slot39: 0,
-        slot40: 0,
-        slot41: 0,
-        slot42: 0,
-        slot43: 0,
-        slot44: 0,
-        slot45: 0,
-        slot46: 0,
-        slot47: 0,
-        slot48: 0,
-      },
+  inputObject = {
+    courtId: '2',
+    date: '2023-11-13 00:00:00',
+    slots: {
+      slot1: 2,
+      slot2: 2,
+      slot3: 2,
+      slot4: 2,
+      slot5: 2,
+      slot6: 2,
+      slot7: 2,
+      slot8: 2,
+      slot9: 2,
+      slot10: 2,
+      slot11: 2,
+      slot12: 2,
+      slot13: 2,
+      slot14: 2,
+      slot15: 2,
+      slot16: 2,
+      slot17: 0,
+      slot18: 0,
+      slot19: 0,
+      slot20: 0,
+      slot21: 0,
+      slot22: 0,
+      slot23: 0,
+      slot24: 0,
+      slot25: 3,
+      slot26: 3,
+      slot27: 0,
+      slot28: 0,
+      slot29: 0,
+      slot30: 0,
+      slot31: 1,
+      slot32: 1,
+      slot33: 0,
+      slot34: 0,
+      slot35: 0,
+      slot36: 0,
+      slot37: 0,
+      slot38: 0,
+      slot39: 0,
+      slot40: 0,
+      slot41: 0,
+      slot42: 0,
+      slot43: 0,
+      slot44: 0,
+      slot45: 0,
+      slot46: 0,
+      slot47: 0,
+      slot48: 0,
     },
-  ];
+  };
 
-  constructor(private store: Store<{ court: CourtState }>) {}
+  constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
-    this.slots = this.convertToSlots(this.inputObject);
+    this.adminService.getCourtPageById(this.courtId).subscribe({
+      next: (court) => {
+        this.courtDetails = court;
+        this.hourlyRate = court.pricePerHr;
+      },
+      error: (err) => (this.errorMessage = err),
+    });
+
+    this.adminService.getCourtAvailability(this.dataToGetSlots).subscribe({
+      next: (slots) => {
+        this.retrievedSlots = slots;
+        console.log(this.retrievedSlots);
+
+        this.slots = this.convertToSlots(this.retrievedSlots);
+      },
+      error: (err) => (this.errorMessage = err),
+    });
+
+    // this.slots = this.convertToSlots(this.inputObject);
   }
 
-  convertToSlots = (input: CourtSchedule[]): Slot[] => {
-    const output: Slot[] = [];
-    const slotKeys = Object.keys(input[0].slots);
+  getCourtAvailability() {}
 
-    const dateValue = new Date(input[0].date);
+  searchSlots() {
+    this.dataForReservation.userId = 9;
+    this.dataForReservation.courtId = this.courtId;
+    this.dataForReservation.startTime;
+  }
+
+  // for date search
+  onChange(result: Date): void {
+    if (result instanceof Date) {
+      // Convert the Date object to Luxon DateTime
+      const dateTime = DateTime.fromJSDate(result);
+      // Format the date as "YYYY-MM-DD" string
+      this.dataToGetSlots.date = dateTime.toISODate();
+      console.log('Selected Time: ', this.dataToGetSlots.date);
+    } else {
+      // Handle null or unexpected values here
+      console.error('Invalid date format');
+    }
+  }
+
+  onOk(result: Date | Date[] | null): void {
+    console.log('Selected Time: ', result);
+  }
+
+  onCalendarChange(result: Array<Date | null>): void {
+    console.log('onCalendarChange', result);
+  }
+
+  log(): void {
+    console.log('click dropdown button');
+  }
+
+  convertToSlots = (input: CourtSchedule): Slot[] => {
+    const output: Slot[] = [];
+    const slotKeys = Object.keys(input.slots);
+    const dateValue = DateTime.fromISO(input.date);
+
+    // Set the initial time to 12:30 AM
+    dateValue.set({ hour: 0, minute: 30, second: 0 });
 
     for (const key of slotKeys) {
       const slotIndex = parseInt(key.replace('slot', ''), 10);
-
-      const updatedDateValue = new Date(dateValue);
-      updatedDateValue.setMinutes(dateValue.getMinutes() + slotIndex * 30);
-
-      const time = updatedDateValue;
-
-      const status = input[0].slots[key];
+      // Add 30 minutes to the current time for each slot
+      const time = dateValue.plus({ minutes: slotIndex * 30 }).toJSDate();
+      const status = input.slots[key];
 
       let statusText = '';
       switch (status) {
@@ -113,7 +210,7 @@ export class CoutPageComponent implements OnInit {
           break;
       }
 
-      output.push({ name: time, status: statusText });
+      output.push({ timeSlot: time, status: statusText });
     }
 
     return output;

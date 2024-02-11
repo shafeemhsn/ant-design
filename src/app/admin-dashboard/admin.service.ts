@@ -11,12 +11,40 @@ import {
   UserEmails,
 } from './admin-dashboard.component';
 import { FacilityHomepage } from '../sport-filter/sport-filter.component';
+import {
+  CourtDetails,
+  CourtSchedule,
+  DataToGetSlots,
+} from '../cout-page/cout-page.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminService {
   constructor(private http: HttpClient) {}
+
+  getCourtAvailability(date: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http
+      .post<CourtSchedule>(`http://localhost:3000/data/court`, date, {
+        headers,
+      })
+      .pipe(
+        // tap((data) =>
+        //   console.log('getCourtAvailability: ' + JSON.stringify(data))
+        // ),
+        catchError(this.handleError)
+      );
+  }
+
+  getCourtPageById(courtId: number): Observable<CourtDetails> {
+    return this.http
+      .get<CourtDetails>(`http://localhost:3000/court/page/${courtId}`)
+      .pipe(
+        tap((data) => console.log(data)),
+        catchError(this.handleError)
+      );
+  }
 
   getAllCitiesForDropDown(): Observable<Cities[]> {
     return this.http

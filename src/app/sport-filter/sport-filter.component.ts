@@ -37,6 +37,17 @@ export class SportFilterComponent implements OnInit {
   courtGrid: any[] = [];
   errorMessage: any;
 
+  activities = [
+    { name: 'Swimming', image: '/assets/images/swimming.jpg' },
+    { name: 'Cricket', image: '/assets/images/cricket.png' },
+    { name: 'Football', image: '/assets/images/football.png' },
+    { name: 'Badminton', image: '/assets/images/badminton.png' },
+    { name: 'Futsal', image: '/assets/images/futsal.png' },
+    { name: 'Volleyball', image: '/assets/images/volleyball.png' },
+    { name: 'Table Tennis', image: '/assets/images/table-tennis.png' },
+    { name: 'Basketball', image: '/assets/images/basketball.png' },
+  ];
+
   constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
@@ -47,16 +58,6 @@ export class SportFilterComponent implements OnInit {
       error: (err) => (this.errorMessage = err),
     });
   }
-  sports = [
-    'Futsal',
-    'Cricket',
-    'Volleyball',
-    'Tennis',
-    'Badminton',
-    'Swimming',
-    'Basketball',
-    'Table Tennis',
-  ];
 
   onSportFilter(sport: string): void {
     console.log(sport);
