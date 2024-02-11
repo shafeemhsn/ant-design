@@ -75,7 +75,18 @@
     style="font-size: 20px"
     nzText="Date: {{ dataToGetSlots.date }}"
   ></nz-divider>
-  <div class="search-group" style="text-align: center; margin-bottom: 20px">
+  <div style="text-align: left; font-size: 18px; margin-top: -20px">
+    <div>
+      Start Time: <b>{{ selectedStartTime | date : "HH:mm" }}</b>
+    </div>
+    <div>
+      End Time: <b>{{ selectedEndTime | date : "HH:mm" }}</b>
+    </div>
+  </div>
+  <div
+    class="search-group"
+    style="text-align: center; margin-bottom: 20px; margin-top: -25px"
+  >
     <nz-date-picker
       class="datePicker"
       nzFormat="yyyy-MM-dd"
@@ -104,8 +115,8 @@
           [ngClass]="{
             'selected-btn': slot.status === 'selected',
             'available-btn': slot.status === 'available',
-            'unavailable-btn': slot.status === 'unavailable',
-            'reserved-btn': slot.status === 'reserved'
+            'unavailable-btn': slot.status === 'reserved',
+            'reserved-btn': slot.status === 'unavailable'
           }"
           (click)="toggleSlots(slot)"
         >
@@ -119,24 +130,26 @@
     <ul class="legends">
       <li class="selected"><span class="text">Selected</span></li>
       <li class="available"><span class="text">Available</span></li>
-      <li class="reserved"><span class="text">Reserved</span></li>
-      <li class="unavailable"><span class="text">Unavailable</span></li>
+      <li class="reserved"><span class="text">Unavailable</span></li>
+      <li class="unavailable"><span class="text">Reserved</span></li>
     </ul>
   </div>
 
   <nz-divider></nz-divider>
   <div style="text-align: center">
-    <p class="time-select-text">
-      {{ selectedSlots.length / 2 }} hour(s) selected
-    </p>
+    <p class="time-select-text">{{ selectedHours }} hour(s) selected</p>
     <h1>
-      LKR {{ (selectedSlots.length * hourlyRate) / 2 | number : "1.2-2" }}
+      LKR
+      {{
+        (selectedHours ? selectedHours * courtDetails.pricePerHr : 0)
+          | number : "1.2-2"
+      }}
     </h1>
     <button
       nz-button
       nzType="primary"
       [nzSize]="size"
-      [disabled]="selectedSlots.length === 0"
+      [disabled]="selectedSlot.length === 0"
     >
       Reserve
     </button>

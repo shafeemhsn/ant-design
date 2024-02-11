@@ -4,7 +4,6 @@ import { NzButtonSize } from 'ng-zorro-antd/button';
 import { DateTime } from 'luxon';
 
 import { AdminService } from '../admin-dashboard/admin.service';
-import { CourtSlotAvailability } from './court.interface';
 
 export interface ReservationData {
   userId: number;
@@ -35,8 +34,8 @@ export interface DataToGetSlots {
 }
 
 export interface Slot {
-  timeSlot: any;
-  status: string;
+  timeSlot: Date;
+  status?: string;
 }
 
 @Component({
@@ -45,7 +44,7 @@ export interface Slot {
   styleUrls: ['./cout-page.component.scss'],
 })
 export class CoutPageComponent implements OnInit {
-  slots: any = [];
+  slots: Slot[] = [];
 
   dataForReservation!: ReservationData;
 
@@ -53,18 +52,20 @@ export class CoutPageComponent implements OnInit {
 
   dataToGetSlots: DataToGetSlots = {
     courtId: 3,
-    date: '2023-11-13',
+    date: '2023-11-15',
   };
 
   courtDetails!: CourtDetails;
 
   retrievedSlots: any;
 
+  selectedStartTime!: Date | null;
+  selectedEndTime!: Date | null;
+  selectedHours!: number;
+
   courtId: number = 3;
 
-  selectedSlots: Slot[] = [];
-
-  hourlyRate!: number;
+  selectedSlot: Slot[] = [];
 
   size: NzButtonSize = 'large';
   inputObject = {
@@ -128,7 +129,6 @@ export class CoutPageComponent implements OnInit {
     this.adminService.getCourtPageById(this.courtId).subscribe({
       next: (court) => {
         this.courtDetails = court;
-        this.hourlyRate = court.pricePerHr;
       },
       error: (err) => (this.errorMessage = err),
     });
@@ -139,6 +139,7 @@ export class CoutPageComponent implements OnInit {
         console.log(this.retrievedSlots);
 
         this.slots = this.convertToSlots(this.retrievedSlots);
+        console.log('this.slots' + JSON.stringify(this.slots));
       },
       error: (err) => (this.errorMessage = err),
     });
@@ -191,7 +192,7 @@ export class CoutPageComponent implements OnInit {
     for (const key of slotKeys) {
       const slotIndex = parseInt(key.replace('slot', ''), 10);
       // Add 30 minutes to the current time for each slot
-      const time = dateValue.plus({ minutes: slotIndex * 30 }).toJSDate();
+      const time = dateValue.plus({ minutes: (slotIndex - 1) * 30 }).toJSDate(); // Adjusted slotIndex
       const status = input.slots[key];
 
       let statusText = '';
@@ -216,6 +217,21 @@ export class CoutPageComponent implements OnInit {
     return output;
   };
 
+  splitTimeSlot(slot: any) {
+    // Convert the selected time slot string to a Luxon DateTime object
+    const dateTime = new Date(slot.timeSlot);
+
+    // Create a new DateTime object representing 30 minutes earlier than the selected time
+    const earlierTime = new Date(dateTime.getTime() + 30 * 60000);
+
+    this.selectedSlot.push({
+      timeSlot: dateTime,
+    });
+    this.selectedSlot.push({
+      timeSlot: earlierTime,
+    });
+  }
+
   toggleSlots(slot: any) {
     console.log('click: ' + JSON.stringify(slot));
 
@@ -224,7 +240,8 @@ export class CoutPageComponent implements OnInit {
     if (slot.status === 'available') {
       // Mark the clicked slot as 'selected'
       slot.status = 'selected';
-      this.selectedSlots.push(slot);
+      this.splitTimeSlot(slot);
+      // this.selectedSlots.push(slot);
       // Find the last selected slot
       const lastSelectedIndex = this.slots
         .slice(0, selectedIndex)
@@ -246,13 +263,28 @@ export class CoutPageComponent implements OnInit {
       // Deselect the clicked slot
 
       slot.status = 'available';
-      this.selectedSlots.splice(selectedIndex, 1);
-
-      // Re-enable all previous slots
+      this.selectedSlot.splice(selectedIndex, 2);
+      console.log('unselected new slots:', this.selectedSlot);
     }
 
-    // Calculate total price
-    const totalPrice = this.selectedSlots.length * this.hourlyRate;
-    console.log('selected slots:', this.selectedSlots); // Output total price to console
+    // Update selected start and end times
+    if (this.selectedSlot.length > 0) {
+      this.selectedStartTime = this.selectedSlot[0].timeSlot;
+      this.selectedEndTime =
+        this.selectedSlot[this.selectedSlot.length - 1].timeSlot;
+    } else {
+      // If no slots are selected, reset start and end times
+      this.selectedStartTime = null;
+      this.selectedEndTime = null;
+    }
+
+    // Update selected hours
+    if (this.selectedStartTime && this.selectedEndTime) {
+      const startTime = DateTime.fromJSDate(this.selectedStartTime);
+      const endTime = DateTime.fromJSDate(this.selectedEndTime);
+      this.selectedHours = endTime.diff(startTime, 'hours').hours;
+    } else {
+      this.selectedHours = 0;
+    }
   }
 }

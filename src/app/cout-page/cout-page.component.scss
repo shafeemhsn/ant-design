@@ -69,6 +69,7 @@
   &:hover {
     a {
       color: #fff;
+      cursor: not-allowed;
     }
   }
 }
@@ -130,7 +131,7 @@ li.available:before {
   top: 4px;
 }
 
-li.reserved:before {
+li.unavailable:before {
   background-color: #fa0000;
   content: "";
   width: 15px;
@@ -141,7 +142,7 @@ li.reserved:before {
   top: 4px;
 }
 
-li.unavailable:before {
+li.reserved:before {
   background-color: #f894bf;
   content: "";
   width: 15px;
